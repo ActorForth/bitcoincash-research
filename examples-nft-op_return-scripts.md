@@ -1,5 +1,12 @@
 ### Examples for Non-Fungible Tokens
 
+References used in the creation of this document
+
+[https://slp.dev/specs/slp-token-type-1/](https://slp.dev/specs/slp-token-type-1/)
+
+[https://slp.dev/specs/slp-nft-1/#simple-nft-vs-nft1-protocol](https://slp.dev/specs/slp-nft-1/#simple-nft-vs-nft1-protocol)
+
+
 #### GENESIS Parent of NTF Token Group Transaction
 
 This is the parent transaction for creating a group of non-fungible tokens. The transaction ID of this transaction will be used to identify non-fungible tokens belonging to this specific group. The example below creates exatly 10 tokens as its output, and does *not* contain a minting baton. Therefore this non-fungible group of tokens will only ever have 10 total tokens in existance.
