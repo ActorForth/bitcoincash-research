@@ -370,3 +370,65 @@ SCRIPT BROKEN DOWN:
   <td>Number of coins: 1 Coin</td>
  </tr>
 </table>
+
+#### MINT Additional Parent Tokens
+
+This is the OP_RETURN script to mint more parent tokens.
+
+SCRIPT (hex): ``6a04534c50000181044d494e54205e3f0a1f6b42ad3b45e9cbc1320284223e299fa8b588aec67b725638d120ad3e010208000000000000c350``
+
+SCRIPT BROKEN DOWN:
+<table>
+ <tr>
+  <td>6a</td>
+  <td>OP_RETURN</td>
+ </tr>  
+ <tr>
+  <td>04</td>
+  <td>length of lokad_id field (4 bytes)</td>
+ </tr>
+ <tr>
+  <td>534c5000</td>
+  <td>Lokad_ID: 'SLP\x00'</td>
+ </tr>
+ <tr>
+  <td>01</td>
+  <td>length of token_type (1 byte)</td>
+ </tr>
+ <tr>
+  <td>81</td>
+  <td>token_type: 81 (NTF parent)</td>
+ </tr>
+ <tr>
+  <td>04</td>
+  <td>number of bytes in transaction_type (4 bytes)</td>
+ </tr>
+ <tr>
+  <td>4d494e54</td>
+  <td>Transaction Type: 'MINT'</td>
+ </tr>
+ <tr>
+  <td>20</td>
+  <td>length of parent txid (32 bytes)</td>
+ </tr>
+ <tr>
+  <td>5e3f0a1f6b42ad3b45e9cbc1320284223e299fa8b588aec67b725638d120ad3e</td>
+  <td>Parent txid</td>
+ </tr>
+ <tr>
+  <td>01</td>
+  <td>Size</td>
+ </tr>
+ <tr>
+  <td>02</td>
+  <td>Unknown - possibly vout?</td>
+ </tr>
+<tr>
+  <td>08</td>
+  <td>Length of bytes for number of coins (OUTPUT)</td>
+ </tr>
+ <tr>
+  <td>000000000000c350</td>
+  <td>Number of coins: 50,000 Coins</td>
+ </tr>
+</table>
