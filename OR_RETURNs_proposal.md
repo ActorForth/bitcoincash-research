@@ -17,7 +17,9 @@ That restriction has to be replaced with the one enforcing the total maximum siz
 
 
 ## Motivation
-
+The primary motivation for the proposal comes from a need to extend the ability for many protocols, that are based on `OP_RETURN` outputs, (e.g. SLP)
+to have an ability to collaborate. Additionally, there's currently no ability to use `OP_RETURN` outputs for one's private purpose within transactions that also 
+include the outputs of `OP_RETURN`-based protocols (e.g. SLP).
 
 
 
