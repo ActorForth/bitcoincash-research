@@ -32,17 +32,17 @@ Moreover, there is no any other implied way to store arbitrary data on bitcoin c
 
 Problem actors: __Account1__, __Account2__  
 
-Steps to reproduce the problem: 
-* Create a SLP defined Token Type 1 (Fungible) token (Token Type 1 GENESIS transaction) - __TokenFun__ (N amount owned by __Account1__)
+*Steps to reproduce the problem:*
+* Create a SLP defined Token Type 1 (Fungible) token (Token Type 1 GENESIS transaction) - __TokenFun__ (*N* amount owned by __Account1__)
 * Create a SLP defined NFT "Group" token (NFT Group GENESIS Transaction)
 * Mint a SLP defined NFT "Group" token (NFT Group MINT Transaction)
-* Create a SLP defined NFT "Child" token (NFT Child GENESIS Transaction) - __TokenNFTChild1__ (owned by Account2)
-* Send N of __TokenFun__ from __Account1__ to __Account2__ and assosiate the amount N of __TokenFun__ to the specific __TokenNFTChild1__
+* Create a SLP defined NFT "Child" token (NFT Child GENESIS Transaction) - __TokenNFTChild1__ (owned by __Account2__)
+* Send *N* of __TokenFun__ from __Account1__ to __Account2__ and assosiate the amount *N* of __TokenFun__ to the specific __TokenNFTChild1__
 
-OP_RETURN has already been taken by SLP defined __TokenFun__ token.
+`OP_RETURN` has already been taken by SLP defined __TokenFun__ token.
 
-Proposed solution:
-Add an additional OP_RETURN output that points to the __TokenNFTChild1__ token ID, which is its GENESIS transaction hash.
+*Proposed solution:*
+Add an additional `OP_RETURN` output that points to the __TokenNFTChild1__ token ID, which is its GENESIS transaction hash.
 
 
 ## Specification
