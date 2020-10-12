@@ -12,7 +12,8 @@
 ```
 
 ## Abstract
-The purpose of this proposal is to 
+The purpose of this proposal is getting a commitment to eliminate the restriction that enforces to have one `OP_RETURN` output within a single transaction.
+That restriction has to be replaced with the one enforcing the total maximum size across all the `OP_RETURN` outputs within a transaction.
 
 
 ## Motivation
