@@ -13,41 +13,40 @@
 
 ## Abstract
 
-The purpose of this proposal is getting a commitment to eliminate the restriction that enforces to have one `OP_RETURN` output within a single transaction.
-That restriction has to be replaced with the one enforcing the total maximum size across all the `OP_RETURN` outputs within a transaction.
+The purpose of this proposal is getting a commitment to eliminate the restriction that enforces having only a single `OP_RETURN` output within a transaction.
+This restriction has to be replaced with one enforces the total maximum size across multiple `OP_RETURN` outputs within a transaction.
 
 ## Motivation
 
-The primary motivation for the proposal comes from a need to extend the ability for many protocols, that are based on `OP_RETURN` outputs, (e.g. SLP)
-to have an ability to collaborate. Additionally, there's currently no ability to use `OP_RETURN` outputs for one's private purpose within transactions that also
-include the outputs of `OP_RETURN`-based protocols (e.g. SLP).  
+The primary motivation for this proposal comes from a desire to combine multiple `OP_RETURN` based protocols (such as SLP) and to add additional data to token transactions that utilize these protocols. Currently it is not possible to construct a transaction using SLP and append additional data to said transaction. Allowing for such additional data could open up new use case opportunities.
 
-### Problem example
+## Problem example
 
-One example of such a limitation would be a way to assosiate SLP Non-fungible tokens with SLP fungible ones.  
-Every kind of SLP transaction (GENESIS, MINT, SEND) for both types of tokens ([Token Type 1](https://github.com/simpleledger/slp-specifications/blob/master/slp-token-type-1.md),
-[NFT1](https://github.com/simpleledger/slp-specifications/blob/master/slp-nft-1.md)) uses `OP_RETURN`.
-This makes it impossible to combine multiple of those within a single bitcoin cash transaction.
+One example of such a use case is the current inabiltity to accosiate SLP fungible and non-fungible tokens with each other.
+
+Every type of SLP transaction (GENESIS, MINT, SEND) for both tokens types ([Token Type 1](https://github.com/simpleledger/slp-specifications/blob/master/slp-token-type-1.md) and 
+[NFT1](https://github.com/simpleledger/slp-specifications/blob/master/slp-nft-1.md)) use `OP_RETURN` to store their token information. SLP transactions are rendered invalid if any extrenous data are added to their `OP_RETURN` information.
+This makes it impossible to combine other metadata or to mix multiple token protocols within a single Bitcoin Cash transaction.
 Moreover, there is no any other implied way to store arbitrary data on bitcoin cash blockchain within SLP transactions.
 
 Problem actors: __Account1__, __Account2__  
 
 *Steps to reproduce the problem:*
 
-* Create a SLP defined Token Type 1 (Fungible) token (Token Type 1 GENESIS transaction) - __TokenFun__ (*N* amount owned by __Account1__)
-* Create a SLP defined NFT "Group" token (NFT Group GENESIS Transaction)
-* Mint a SLP defined NFT "Group" token (NFT Group MINT Transaction)
-* Create a SLP defined NFT "Child" token (NFT Child GENESIS Transaction) - __TokenNFTChild1__ (owned by __Account2__)
+* Create an SLP defined Token Type 1 (Fungible) token (Token Type 1 GENESIS transaction) - __TokenFun__ (*N* amount owned by __Account1__)
+* Create an SLP defined NFT "Group" token (NFT Group GENESIS Transaction)
+* Instantiate *X* number of SLP defined NFT child tokens to *X* number of transaction outputs (one per output) (NFT Group SEND Transaction)
+* Create an SLP defined NFT "Child" token (NFT Child GENESIS Transaction) - __TokenNFTChild1__ (owned by __Account2__)
 * Send *N* of __TokenFun__ from __Account1__ to __Account2__ and assosiate the amount *N* of __TokenFun__ to the specific __TokenNFTChild1__
 
-`OP_RETURN` has already been taken by SLP defined __TokenFun__ token.
+Single `OP_RETURN` is already being used by SLP defined __TokenFun__ token. This leaves no way to add metadata that creates an association between the SLP defined NTF1 and SLP defined Token Type 1.
 
 *Proposed solution:*
 Add an additional `OP_RETURN` output that points to the __TokenNFTChild1__ token ID, which is its GENESIS transaction hash.
 
 ## Specification
 
-This BIP proposes a
+This BIP proposes allowing multiple `OP_RETURN` outputs in a transaction, but maintaining the same size limit across all `OP_RETURN` outputs.
 
 ## Risks
 
