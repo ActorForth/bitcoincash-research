@@ -27,7 +27,7 @@ One example of such a use case is the current inability to associate SLP fungibl
 Every type of SLP transaction (GENESIS, MINT, SEND) for both tokens types ([Token Type 1](https://github.com/simpleledger/slp-specifications/blob/master/slp-token-type-1.md) and 
 [NFT1](https://github.com/simpleledger/slp-specifications/blob/master/slp-nft-1.md)) use `OP_RETURN` to store their token information. SLP transactions are rendered invalid if any extraneous data are added to their `OP_RETURN` information.
 This makes it impossible to combine other metadata or to mix multiple token protocols within a single Bitcoin Cash transaction.
-Moreover, there is no any other implied way to store arbitrary data on bitcoin cash blockchain within SLP transactions.
+Moreover, there is not any other implied way to store arbitrary data on bitcoin cash blockchain within SLP transactions.
 
 Problem actors: __Account1__, __Account2__  
 
