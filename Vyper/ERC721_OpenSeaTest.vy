@@ -1,7 +1,9 @@
 # @version 0.3.1
 # @dev Implementation of ERC-721 non-fungible token standard.
-# @dev Added support for OpenSea NFT Discovery/Compatibility.
-# @author Ryuya Nakamura (@nrryuya), Thiwakon Mezenen (@ThiwakonPB), Anutorn Ravisitikiat(BeatMil) 
+# @dev Added support for OpenSea NFT Discovery/Compatibility with Vyper contracts.
+# @author Ryuya Nakamura (@nrryuya)
+# @author Thiwakon Mezenen (@ThiwakonPB)
+# @author Anutorn Ravisitikiat(BeatMil) 
 # Modified from: https://github.com/vyperlang/vyper/blob/de74722bf2d8718cca46902be165f9fe0e3641dd/examples/tokens/ERC721.vy
 
 from vyper.interfaces import ERC721
@@ -118,7 +120,29 @@ def __init__(_owner: address):
 
 
 # Hacky ERC165 
-# Credit to @fubuloubu for providing this function
+# Credit & thanks to @fubuloubu for providing this function for us.
+#
+# This is a technique to (hopefully temporarily) get around Vyper's absence of the bytes4
+# type from Solidity. Unfortunately Opensea (and other platforms) requires a successful call
+# to a supportsInterface(bytes4) method to be discoverable. This function takes advantage of
+# the EVM's method resolution via 4-byte hashcode. In this case the hashcode for the required
+# function is 0x01ffc9a7. See https://www.4byte.directory/signatures/?bytes4_signature=0x01ffc9a7
+# Sadly using an interesting but human readable hash proxy collission like
+# pizza_mandate_apology(uint256) (see above link - nice job getting a 1:4billion hash collision!)
+# does not work ( https://github.com/vyperlang/vyper/pull/2622#issuecomment-1022906899 ) and we
+# have to do something even nastier code-wise like the following technique: 
+#
+# We just override the __default__ method to perform a check to see if this is the requested
+# method and, if so, take the next 32 bytes passed in and interpret those as the interface id 
+# for use in the implementation of supportsInterface(bytes4)'s behavior.
+#
+# Naturally if you've already got a __default__ method you'd need to perform a check on which
+# hashcode is being invoked so you'd know which behavior to provide.
+#
+# Hopefully a bytes4 implementation in Vyper will be forthcoming and Ethereum standards going
+# forward will be specified in a manner for general language compatibility on the EVM.
+# You can follow this issue https://github.com/vyperlang/vyper/issues/2559 which, if completed,
+# should allow us to abandon this hack.
 @external
 def __default__() -> bool:
     method: Bytes[4] = slice(msg.data, 0, 4)
